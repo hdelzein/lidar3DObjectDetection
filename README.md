@@ -10,10 +10,10 @@ I followed the instructions below:
 
 In file loop_over_dataset.py, set the attributes for code execution in the following way:
 
-1- data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord
-2- show_only_frames = [0, 1]
-3- exec_detection = []
-4- exec_visualization = ['show_range_image']
+- 1- data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord
+- 2- show_only_frames = [0, 1]
+- 3- exec_detection = []
+- 4- exec_visualization = ['show_range_image']
 
 
 

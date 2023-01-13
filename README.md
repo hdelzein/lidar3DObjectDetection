@@ -19,6 +19,12 @@ In file loop_over_dataset.py, set the attributes for code execution in the follo
 
 I implemented the show_range_image function located in the file student/objdet_pcl.py.
 
+- Convert range image “range” channel to 8bit
+- Convert range image “intensity” channel to 8bit
+- Crop range image to +/- 90 deg. left and right of the forward-facing x-axis
+- Stack cropped range and intensity image vertically and visualize the result using OpenCV
+
+
 Inside the function I followed the requiured steps:
 
 Convert range image “range” channel to 8bit

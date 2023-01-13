@@ -4,7 +4,7 @@ This is a summary of the implementation of the results of Lidar 3D object detect
 
 ### Summary for Project Step One. it is divided into two section. Below is the result for each section
 
-## Visualize range image channels (ID_S1_EX1)
+## Section One. Visualize range image channels (ID_S1_EX1)
 
 I followed the instructions below:
 
@@ -37,7 +37,7 @@ The outcome is a visualization of the range image
 
 <img src="img/range_img.jpg"/>
 
-## Visualize Point Cloud ((ID_S1_EX2)
+## Section Two. Visualize Point Cloud ((ID_S1_EX2)
 
 Task preparations
 In file loop_over_dataset.py, set the attributes for code execution in the following way:
@@ -59,8 +59,7 @@ I implemented the show_pcl function located in the file student/objdet_pcl.py
 The outcome is a visualization is 
 
 
-### Summary for Project Step Two. it is divided into three section. Below is the result for each section
-
+### Summary for Project Step Two. it is divided into three section. 
 
 Task preparations
 
@@ -74,7 +73,9 @@ In file loop_over_dataset.py, set the attributes for code execution in the follo
 
 The outcome of this task involves writing code within the function 'bev_from_pcl' located in the file student/objdet_pcl.py.
 
-## Excersice 1
+## Section one. Create BEV map
+
+
 Convert sensor coordinates to BEV-map coordinates (ID_S2_EX1)
 
 - Step 1 - Line 149
@@ -88,7 +89,7 @@ The outcome is a visualization of the intensity image
 
 <img src="img/bev.jpg"/>
 
-## Excersice 2
+## Section two. Compute intensity layer of the BEV map (ID_S2_EX2)
 
 Compute intensity layer of the BEV map (ID_S2_EX2) function 'bev_from_pcl':
 
@@ -103,7 +104,7 @@ The outcome is a visualization of the intensity image
 
 <img src="img/intensity_img.jpg"/>
 
-## Excersice 3
+## Section three. Compute height layer of the BEV map (ID_S2_EX3)
 
 Compute height layer of the BEV map (ID_S2_EX3) in function 'bev_from_pcl':
 

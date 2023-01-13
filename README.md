@@ -8,7 +8,7 @@ This is a summary of the implementation of the results of Lidar 3D object detect
 
 I followed the instructions below:
 
-In file loop_over_dataset.py, set the attributes for code execution in the following way:
+In file loop_over_dataset.py, set the attributes for code execution in the following way which is implemented:
 
 data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord
 show_only_frames = [0, 1]
@@ -16,6 +16,7 @@ exec_data = []
 exec_detection = []
 exec_tracking = []
 exec_visualization = ['show_range_image']
+
 
 I implemented the show_range_image function located in the file student/objdet_pcl.py.
 

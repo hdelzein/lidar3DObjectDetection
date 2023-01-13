@@ -157,14 +157,13 @@ Function Three: 'detect_objects'. Perform inference
 - Step 1: Line 206 - 222
 
 The outcome is the output of this poece of code:
-outputs['hm_cen'] = _sigmoid(outputs['hm_cen'])
-outputs['cen_offset'] = _sigmoid(outputs['cen_offset'])
-# detections size (batch_size, K, 10)
-detections = decode(outputs['hm_cen'], outputs['cen_offset'], outputs['direction'], outputs['z_coor'],outputs['dim'], K=configs.K)
-detections = detections.cpu().numpy().astype(np.float32)
-detections = post_processing(detections, configs)
-detections = detections[0][1]  # only first batch
-print(detections)
+- outputs['hm_cen'] = _sigmoid(outputs['hm_cen'])
+- outputs['cen_offset'] = _sigmoid(outputs['cen_offset'])
+- detections = decode(outputs['hm_cen'], outputs['cen_offset'], outputs['direction'], outputs['z_coor'],outputs['dim'], K=configs.K)
+- detections = detections.cpu().numpy().astype(np.float32)
+- detections = post_processing(detections, configs)
+- detections = detections[0][1]  # only first batch
+- print(detections)
 
 
 ## Section One. Extract 3D bounding boxes from model response (ID_S3_EX2)

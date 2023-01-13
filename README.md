@@ -8,7 +8,7 @@ This is a summary of the implementation of the results of Lidar 3D object detect
 
 I followed the instructions below:
 
-In file loop_over_dataset.py, set the attributes for code execution in the following way which is implemented:
+In file loop_over_dataset.py, set the attributes for code execution in the following way:
 
 data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord
 show_only_frames = [0, 1]

@@ -125,6 +125,56 @@ The outcome is a visualization of the height image
 
 <img src="img/height_img.jpg"/>
 
+### Summary for Project Step Two. it is divided into two section. 
+
+Task preparations:
+
+In file loop_over_dataset.py, set the attributes for code execution in the following way:
+
+- data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord
+- show_only_frames = [50, 51]
+- exec_detection = ['bev_from_pcl', 'detect_objects']
+- exec_tracking = []
+- exec_visualization = ['show_objects_in_bev_labels_in_camera']
+- configs_det = det.load_configs(model_name="fpn_resnet")
+
+## Section One. Add a second model from a GitHub repo (ID_S3_EX1)
+
+In addition to Complex YOLO, extract the code for output decoding and post-processing from the GitHub repo.
+
+Modify Code in object_detect.py within three functions:
+
+Funtion One: 'load_configs_model'. Add configuration paramters
+
+- Step 1: Line 61 - 103
+
+Function Two: 'Create_model'. Instantiate a model
+
+- Step 1: Line 157 - 165
+
+Function Three: 'detect_objects'. Perform inference
+
+- Step 1: Line 206 - 222
+
+The outcome is print(detetctions):
+For frame 50:
+
+[[9.7223908e-01 3.5127075e+02 2.1875238e+02 1.0574491e+00 1.6241088e+00
+  2.0172737e+01 4.7542786e+01 1.3822032e-02]
+ [6.2091905e-01 3.1184229e+02 3.5521008e+02 1.1316249e+00 1.7765536e+00
+  2.0849134e+01 4.6748146e+01 8.4769158e-03]]
+  
+For frame 51:
+
+
+[[ 9.0935647e-01  3.5153265e+02  2.1939407e+02  1.0489278e+00
+   1.6082901e+00  2.0308041e+01  4.8363388e+01  1.2367942e-02]
+ [ 8.0556422e-01  3.1226596e+02  3.5451572e+02  1.1078372e+00
+   1.7661633e+00  2.0709114e+01  4.8925682e+01  6.6410407e-02]
+ [ 7.8161126e-01  3.5299170e+02  6.0305396e+02  1.2087985e+00
+   1.6976427e+00  1.9822775e+01  5.0056709e+01 -3.2651708e-02]]
+   
+
 
 
 

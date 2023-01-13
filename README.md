@@ -75,6 +75,8 @@ The outcome of this task involves writing code within the function 'bev_from_pcl
 
 ## Section one. Create BEV map
 
+Convert coordinates in x,y [m] into x,y [pixel] based on width and height of the bev map
+
 
 Convert sensor coordinates to BEV-map coordinates (ID_S2_EX1)
 
@@ -91,6 +93,9 @@ The outcome is a visualization of the intensity image
 
 ## Section two. Compute intensity layer of the BEV map (ID_S2_EX2)
 
+- Assign lidar intensity values to the cells of the bird-eye view map
+- Adjust the intensity in such a way that objects of interest (e.g. vehicles) are clearly visible
+
 Compute intensity layer of the BEV map (ID_S2_EX2) function 'bev_from_pcl':
 
 - Step 1 - Line 182
@@ -105,6 +110,10 @@ The outcome is a visualization of the intensity image
 <img src="img/intensity_img.jpg"/>
 
 ## Section three. Compute height layer of the BEV map (ID_S2_EX3)
+
+- Make use of the sorted and pruned point-cloud lidar_pcl_top from the previous task
+- Normalize the height in each BEV map pixel by the difference between max. and min. height
+- Fill the "height" channel of the BEV map with data from the point-cloud
 
 Compute height layer of the BEV map (ID_S2_EX3) in function 'bev_from_pcl':
 

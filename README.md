@@ -37,6 +37,86 @@ The outcome is a visualization of the range image
 
 <img src="img/range_img.jpg"/>
 
+## Visualize Point Cloud ((ID_S1_EX2)
+
+Task preparations
+In file loop_over_dataset.py, set the attributes for code execution in the following way:
+
+- data_filename = 'training_segment-10963653239323173269_1924_000_1944_000_with_camera_labels.tfrecord'
+- show_only_frames = [0, 200]
+- exec_detection = []
+- exec_tracking = []
+- exec_visualization = ['show_pcl']
+
+I implemented the show_pcl function located in the file student/objdet_pcl.py
+
+- Step 1 Line 46
+- Step 2 Line 52
+- Step 3 Line 56
+- Step 4 Line 59 
+
+
+The outcome is a visualization is 
+
+
+### Summary for Project Step Two. it is divided into three section. Below is the result for each section
+
+
+Task preparations
+
+In file loop_over_dataset.py, set the attributes for code execution in the following way:
+
+- data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord
+- show_only_frames = [0, 1]
+- exec_detection = ['bev_from_pcl']
+- exec_tracking = []
+- exec_visualization = []
+
+The outcome of this task involves writing code within the function 'bev_from_pcl' located in the file student/objdet_pcl.py.
+
+## Excersice 1
+Convert sensor coordinates to BEV-map coordinates (ID_S2_EX1)
+
+- Step 1 - Line 149
+- Step 2 - Line 152
+- Step 3 - Line 157
+- Step 4 - Line 164
+
+
+
+The outcome is a visualization of the intensity image
+
+<img src="img/bev.jpg"/>
+
+## Excersice 2
+
+Compute intensity layer of the BEV map (ID_S2_EX2) function 'bev_from_pcl':
+
+- Step 1 - Line 182
+- Step 2 - Line 184
+- Step 3 - Line 198
+- Step 4 - Line 195
+- Step 5 - Line 201
+
+
+The outcome is a visualization of the intensity image
+
+<img src="img/intensity_img.jpg"/>
+
+## Excersice 3
+
+Compute height layer of the BEV map (ID_S2_EX3) in function 'bev_from_pcl':
+
+- Step 1 - Line 218
+- Step 2 - Line 220
+- Step 3 - Line 227
+
+The outcome is a visualization of the height image
+
+<img src="img/height_img.jpg"/>
+
+
+
 
 
 ### Waymo Open Dataset Files

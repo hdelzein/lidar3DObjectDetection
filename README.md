@@ -125,7 +125,7 @@ The outcome is a visualization of the height image
 
 <img src="img/height_img.jpg"/>
 
-### Summary for Project Step Two. it is divided into two section. 
+### Summary for Project Step Three. it is divided into two section. 
 
 Task preparations:
 
@@ -166,7 +166,7 @@ The outcome is the output of this poece of code:
 - print(detections)
 
 
-## Section One. Extract 3D bounding boxes from model response (ID_S3_EX2)
+## Section Two. Extract 3D bounding boxes from model response (ID_S3_EX2)
 
 - Transform BEV coordinates in [pixels] into vehicle coordinates in [m]
 - Convert model output to expected bounding box format [class-id, x, y, z, h, w, l, yaw]
@@ -183,9 +183,75 @@ The outcome is a visualization of the bounding boxes:
 <img src="img/Frame50_boundingBox.jpg"/>
 
 
-### Waymo Open Dataset Files
-This project makes use of three different sequences to illustrate the concepts of object detection and tracking. These are: 
-- Sequence 1 : `training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord`
-- Sequence 2 : `training_segment-10072231702153043603_5725_000_5745_000_with_camera_labels.tfrecord`
-- Sequence 3 : `training_segment-10963653239323173269_1924_000_1944_000_with_camera_labels.tfrecord`
+### Summary for Project Step Fouir. it is divided into three section. 
 
+
+Task preparations for section one and two:
+
+In file loop_over_dataset.py, set the attributes for code execution in the following way:
+
+- data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord
+- show_only_frames = [50, 51]
+- exec_detection = ['bev_from_pcl', 'detect_objects', 'validate_object_labels', 'measure_detection_performance']
+- exec_tracking = []
+- exec_visualization = ['show_detection_performance']
+- configs_det = det.load_configs(model_name="darknet")
+
+## Section One. Compute intersection-over-union between labels and detections (ID_S4_EX1)
+
+This task involves writing code in the file student/objdet_eval.py for function 'measure_detection_performance'
+It will perform the following:
+
+- For all pairings of ground-truth labels and detected objects, compute the degree of geometrical overlap
+- The function tools.compute_box_corners returns the four corners of a bounding box which can be used with the Polygon structure of the Shapely toolbox
+- Assign each detected object to a label only if the IOU exceeds a given threshold
+- In case of multiple matches, keep the object/label pair with max. IOU
+- Count all object/label-pairs and store them as “true positives”
+
+- Step 1: Line 51
+- Step 2: Line 59
+- Step 3: Line 63
+- Step 4: Line 66
+- Step 5: Line 71
+- Step 6: Line 77
+
+
+## Section Two. Compute false-negatives and false-positives (ID_S4_EX2)
+
+
+This task involves writing code in the file student/objdet_eval.py for function 'measure_detection_performance'
+
+- Step 1: Line 103
+- Step 2: Line 107
+- Step 3: Line 109
+- Line 115 assemble the performance data into a list
+
+## Section Three. Compute precision and recall (ID_S4_EX3)
+
+Task preparations
+In file loop_over_dataset.py, set the attributes for code execution in the following way:
+
+data_filename = 'training_segment-1005081002024129653_5313_150_5333_150_with_camera_labels.tfrecord
+show_only_frames = [50, 150]
+exec_detection = ['bev_from_pcl', 'detect_objects', 'validate_object_labels', 'measure_detection_performance']
+exec_tracking = []
+exec_visualization = ['show_detection_performance']
+configs_det = det.load_configs(model_name="darknet")
+
+This task involves writing code in the file student/objdet_eval.py for function 'compute_performance_stats'
+
+- Compute “precision” over all evaluated frames using true-positives and false-positives
+- Compute “recall” over all evaluated frames using true-positives and false-negatives
+
+- Step 1: Line 139
+- Step 2: Line 141
+- Step 3: Line 144
+
+## Output for all of these three sections is shown in the image below:
+
+<img src="img/histogram_one.png"/>
+
+The outcome of the preciosn recall when configs_det.use_labels_as_objects = True is shown below:
+
+
+<img src="img/histogram_two.png"/>

@@ -56,7 +56,19 @@ I implemented the show_pcl function located in the file student/objdet_pcl.py
 - Step 4 Line 59 
 
 
-The outcome is a visualization is 
+The outcome is a visualization of 10 cloud poits images shown below:
+
+<img src="img/cloud_point_one.jpg"/>
+<img src="img/cloud_point_two.jpg"/>
+<img src="img/cloud_point_three.jpg"/>
+<img src="img/cloud_point_four.jpg"/>
+<img src="img/cloud_point_five.jpg"/>
+<img src="img/cloud_point_six.jpg"/>
+<img src="img/cloud_point_seven.jpg"/>
+<img src="img/cloud_point_eight.jpg"/>
+<img src="img/cloud_point_nine.jpg"/>
+<img src="img/cloud_point_ten.jpg"/>
+
 
 
 ### Summary for Project Step Two. it is divided into three section. 

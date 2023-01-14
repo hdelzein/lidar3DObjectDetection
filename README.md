@@ -261,7 +261,24 @@ This task involves writing code in the file student/objdet_eval.py for function 
 
 ## Output for all of these three sections is shown in the image below:
 
-<img src="img/histogram_one.png"/>
+I got differen results for the z position error mean when I implemented in the 
+function 'detect_objects' for the boudning box z cooridnate differently. 
+
+I used the SFA3D function 'convert_det_to_real_values' as a template and 
+when I implemented this way the z coordinate as recommmedned by that function as shown below :
+
+z = z_bv + configs.lim_z[0]
+
+I had the following result shown below:
+
+<img src="img/perormance_hist_z_mean.png"/>
+
+
+When I implemented the z cooridante as shown below, I had the result shown below for the z position error mean:
+
+z = z_bv
+
+<img src="img/histogram_one.png"/
 
 The outcome of the preciosn recall when configs_det.use_labels_as_objects = True is shown below:
 

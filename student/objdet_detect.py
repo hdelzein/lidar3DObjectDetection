@@ -22,6 +22,7 @@ PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
+
 # model-related
 from tools.objdet_models.resnet.models import fpn_resnet
 from tools.objdet_models.resnet.utils.evaluation_utils import decode, post_processing 
@@ -29,7 +30,7 @@ from tools.objdet_models.resnet.utils.evaluation_utils import decode, post_proce
 from tools.objdet_models.darknet.models.darknet2pytorch import Darknet as darknet
 from tools.objdet_models.darknet.utils.evaluation_utils import post_processing_v2
 
-
+from tools.objdet_models.resnet.utils.torch_utils import _sigmoid
 # load model-related parameters into an edict
 def load_configs_model(model_name='darknet', configs=None):
 
@@ -56,11 +57,50 @@ def load_configs_model(model_name='darknet', configs=None):
         configs.num_workers = 4
         configs.pin_memory = True
         configs.use_giou_loss = False
+        configs.min_iou = 0.5
 
     elif model_name == 'fpn_resnet':
         ####### ID_S3_EX1-3 START #######     
         #######
         print("student task ID_S3_EX1-3")
+        configs.model_path = os.path.join(parent_path, 'tools', 'objdet_models', 'resnet')
+        configs.pretrained_filename = os.path.join(configs.model_path, 'pretrained', 'fpn_resnet_18_epoch_300.pth')
+        configs.arch = 'fpn_resnet'
+
+# copied from sda test.py
+
+        configs.pin_memory = True
+        configs.distributed = False  # For testing on 1 GPU only
+
+        configs.input_size = (608, 608)
+        configs.hm_size = (152, 152)
+        configs.down_ratio = 4
+        configs.max_objects = 50
+
+        configs.imagenet_pretrained = False
+        configs.head_conv = 64
+        configs.num_classes = 3
+        configs.num_center_offset = 2
+        configs.num_z = 1
+        configs.num_dim = 3
+        configs.num_direction = 2  # sin, cos
+
+        configs.heads = {
+            'hm_cen': configs.num_classes,
+            'cen_offset': configs.num_center_offset,
+            'direction': configs.num_direction,
+            'z_coor': configs.num_z,
+            'dim': configs.num_dim
+        }
+        configs.num_input_features = 4
+# copied from above from test.py and the default values from sda\test.py in the parse_test_config()
+        configs.batch_size = 1
+        configs.num_samples = None
+        configs.num_workers = 1
+        configs.K = 50
+        configs.peak_thresh = 0.2
+        configs.conf_thresh = 0.5
+        configs.min_iou = 0.5
 
         #######
         ####### ID_S3_EX1-3 END #######     
@@ -119,6 +159,9 @@ def create_model(configs):
         #######
         print("student task ID_S3_EX1-4")
 
+        num_layers = 18
+        model = fpn_resnet.get_pose_net(num_layers, configs.heads, configs.head_conv, configs.imagenet_pretrained)
+
         #######
         ####### ID_S3_EX1-4 END #######     
     
@@ -168,6 +211,17 @@ def detect_objects(input_bev_maps, model, configs):
             #######
             print("student task ID_S3_EX1-5")
 
+            outputs['hm_cen'] = _sigmoid(outputs['hm_cen'])
+            outputs['cen_offset'] = _sigmoid(outputs['cen_offset'])
+            # detections size (batch_size, K, 10)
+            detections = decode(outputs['hm_cen'], outputs['cen_offset'], outputs['direction'], outputs['z_coor'],
+                                outputs['dim'], K=configs.K)
+            detections = detections.cpu().numpy().astype(np.float32)
+            detections = post_processing(detections, configs)
+
+            detections = detections[0][1]  # only first batch
+            print(detections)
+
             #######
             ####### ID_S3_EX1-5 END #######     
 
@@ -179,15 +233,27 @@ def detect_objects(input_bev_maps, model, configs):
     print("student task ID_S3_EX2")
     objects = [] 
 
-    ## step 1 : check whether there are any detections
+    if len(detections) > 0:
 
         ## step 2 : loop over all detections
-        
+        for ele in detections:
+            id, x_bv, y_bv, z_bv, h_bv, w_bv, l_bv, yaw = ele
+
             ## step 3 : perform the conversion using the limits for x, y and z set in the configs structure
-        
+
+            x = y_bv / configs.bev_height * (configs.lim_x[1] - configs.lim_x[0]) + configs.lim_x[0]
+            y = x_bv / configs.bev_width * (configs.lim_y[1] - configs.lim_y[0]) + (configs.lim_y[0])
+            w = w_bv / configs.bev_width * (configs.lim_y[1] - configs.lim_y[0])
+            l = l_bv / configs.bev_height * (configs.lim_x[1] - configs.lim_x[0])
+            z = z_bv + configs.lim_z[0]
+            #z = z_bv
             ## step 4 : append the current object to the 'objects' array
-        
-    #######
+            #Check if bounding box is correct
+            if ((y >= configs.lim_y[0] and y <= configs.lim_y[1]) and (x >= configs.lim_x[0] and x <= configs.lim_x[1]) and  (z >= configs.lim_z[0]
+                and z <= configs.lim_z[1])):
+                     objects.append([1, x, y, z, h_bv, w, l, -yaw])
+
+
     ####### ID_S3_EX2 START #######   
     
     return objects    

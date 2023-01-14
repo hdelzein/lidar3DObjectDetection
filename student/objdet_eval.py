@@ -47,19 +47,39 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
             ####### ID_S4_EX1 START #######     
             #######
             print("student task ID_S4_EX1 ")
+            matches_lab_det = []
 
             ## step 1 : extract the four corners of the current label bounding-box
+            ## from tools import use this function def compute_box_corners(x,y,w,l,yaw):
+            ## the label has a id box with x,y,x,width , length , height , and heading
+
+            label_box = label.box
+            box_corner = tools.compute_box_corners(label_box.center_x, label_box.center_y,label_box.width, label_box.length, label_box.heading)
             
             ## step 2 : loop over all detected objects
+            for ele in detections:
+                id, x, y, z, h, w, l, heading = ele
 
                 ## step 3 : extract the four corners of the current detection
+                det_corner = tools.compute_box_corners(x, y,w, l, heading)
                 
                 ## step 4 : computer the center distance between label and detection bounding-box in x, y, and z
+                dist_x = label_box.center_x - x
+                dist_y = label_box.center_y - y
+                dist_z = label_box.center_z - z
                 
                 ## step 5 : compute the intersection over union (IOU) between label and detection bounding-box
+                ## used this website as a reference https://github.com/ming71/toolbox/blob/master/rotation/SkewIou.py
+
+                inter = Polygon(box_corner).intersection(Polygon(det_corner)).area
+                un = Polygon(box_corner).union(Polygon(det_corner)).area
+                iou = inter/un
                 
                 ## step 6 : if IOU exceeds min_iou threshold, store [iou,dist_x, dist_y, dist_z] in matches_lab_det and increase the TP count
-                
+                if iou > min_iou:
+                    matches_lab_det.append([iou,dist_x, dist_y, dist_z])
+                    true_positives = true_positives + 1
+
             #######
             ####### ID_S4_EX1 END #######     
             
@@ -69,33 +89,39 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
             ious.append(best_match[0])
             center_devs.append(best_match[1:])
 
+    print(ious)
+    print(center_devs)
+
 
     ####### ID_S4_EX2 START #######     
     #######
     print("student task ID_S4_EX2")
+
     
     # compute positives and negatives for precision/recall
     
     ## step 1 : compute the total number of positives present in the scene
-    all_positives = 0
+    all_positives = list(labels_valid).count(True)
 
     ## step 2 : compute the number of false negatives
-    false_negatives = 0
+    false_negatives = all_positives - true_positives
 
     ## step 3 : compute the number of false positives
-    false_positives = 0
+    false_positives = len(detections) - true_positives
     
     #######
     ####### ID_S4_EX2 END #######     
     
     pos_negs = [all_positives, true_positives, false_negatives, false_positives]
     det_performance = [ious, center_devs, pos_negs]
+
+    print(det_performance)
     
     return det_performance
 
 
 # evaluate object detection performance based on all frames
-def compute_performance_stats(det_performance_all):
+def compute_performance_stats(det_performance_all: object) -> object:
 
     # extract elements
     ious = []
@@ -111,12 +137,12 @@ def compute_performance_stats(det_performance_all):
     print('student task ID_S4_EX3')
 
     ## step 1 : extract the total number of positives, true positives, false negatives and false positives
-    
+    total_pos ,  total_true_pos ,total_false_neg , total_false_pos = map(sum, zip(*pos_negs))
     ## step 2 : compute precision
-    precision = 0.0
+    precision = float(total_true_pos)/float((total_true_pos + total_false_pos))
 
-    ## step 3 : compute recall 
-    recall = 0.0
+    ## step 3 : compute recall
+    recall = float(total_true_pos)/float((total_true_pos +  total_false_neg))
 
     #######    
     ####### ID_S4_EX3 END #######     
@@ -169,4 +195,3 @@ def compute_performance_stats(det_performance_all):
                     verticalalignment='top', bbox=props)
     plt.tight_layout()
     plt.show()
-

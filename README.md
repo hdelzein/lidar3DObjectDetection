@@ -261,7 +261,7 @@ This task involves writing code in the file student/objdet_eval.py for function 
 
 ## Output for all of these three sections is shown in the image below:
 
-I got differen results for the z position error mean when I implemented in the 
+I got differen results for the z position error mean because I implemented the 
 function 'detect_objects' for the boudning box z cooridnate differently. 
 
 I used the SFA3D function 'convert_det_to_real_values' as a template and 
@@ -274,7 +274,8 @@ I had the following result shown below:
 <img src="img/perormance_hist_z_mean.png"/>
 
 
-When I implemented the z cooridante as shown below, I had the result shown below for the z position error mean:
+When I experimented with the z cooridante as shown below, I had the result shown below for 
+the z position error mean:
 
 z = z_bv
 

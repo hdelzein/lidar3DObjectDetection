@@ -278,7 +278,7 @@ When I implemented the z cooridante as shown below, I had the result shown below
 
 z = z_bv
 
-<img src="img/histogram_one.png"/
+<img src="img/histogram_one.png"/>
 
 The outcome of the preciosn recall when configs_det.use_labels_as_objects = True is shown below:
 

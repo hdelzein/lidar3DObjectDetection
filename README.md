@@ -208,7 +208,7 @@ In file loop_over_dataset.py, set the attributes for code execution in the follo
 - exec_tracking = []
 - exec_visualization = ['show_detection_performance']
 - configs_det = det.load_configs(model_name="darknet")
-
+...
 ## Section One. Compute intersection-over-union between labels and detections (ID_S4_EX1)
 
 This task involves writing code in the file student/objdet_eval.py for function 'measure_detection_performance'
@@ -227,6 +227,37 @@ It will perform the following:
 - Step 5: Line 71
 - Step 6: Line 77
 
+The outcome of the IOU as shown below for fpn_resnet:
+
+Frame 50
+```
+ious=[0.7713758166367373, 0.7517187615472919]
+center_devs=[[-0.14653606621198279, 0.024849620139939077, 0.7716807918384347], [-0.03745883634224967, 0.0985908144570864, 0.7613357724729894]]
+
+```
+
+Frame 51 
+````
+
+ious=[0.7367573408344353, 0.7806671754684089, 0.7790202417633535]
+center_devs=[[-0.024818966367952555, 0.04578089027352661, 0.7811650451956211], [-0.15749722041025294, 0.03738345192399706, 0.7663206134981237], [-0.0923428242567752, 0.07059152961176451, 0.7633574192308288]]
+
+````
+
+
+The outcome of the IOU as shown below for darknet:
+
+Frame 50
+```
+ious=[0.8234004203468781, 0.8904481747451527, 0.8749700156139986]
+center_devs=[[tensor(0.1402), tensor(-0.0197), 2.0292643213596193], [tensor(-0.0818), tensor(0.0686), 1.8291298942401681], [tensor(0.0840), tensor(0.0247), 1.8929607095304846]]
+```
+
+Frame 51
+```
+ious=[0.8234004203468781, 0.8904481747451527, 0.8749700156139986]
+center_devs=[[tensor(0.1402), tensor(-0.0197), 2.0292643213596193], [tensor(-0.0818), tensor(0.0686), 1.8291298942401681], [tensor(0.0840), tensor(0.0247), 1.8929607095304846]]
+```
 
 ## Section Two. Compute false-negatives and false-positives (ID_S4_EX2)
 
@@ -237,6 +268,29 @@ This task involves writing code in the file student/objdet_eval.py for function 
 - Step 2: Line 107
 - Step 3: Line 109
 - Line 115 assemble the performance data into a list
+
+The outcome for fpn_resnet frame 50:
+
+````
+all_positives=3, true_positives=2, false_negatives=1, false_positives=0
+````
+
+The outcome for fpn_resnet frame 51:
+
+```
+all_positives=3, true_positives=3, false_negatives=0, false_positives=0
+````
+
+The outcome for darknet frame 50:
+
+````
+all_positives=3, true_positives=3, false_negatives=0, false_positives=0
+````
+
+The outcome for darknet frame 51:
+
+````all_positives=3, true_positives=3, false_negatives=0, false_positives=0
+````
 
 ## Section Three. Compute precision and recall (ID_S4_EX3)
 
@@ -259,7 +313,12 @@ This task involves writing code in the file student/objdet_eval.py for function 
 - Step 2: Line 141
 - Step 3: Line 144
 
-## Output for all of these three sections is shown in the image below:
+The outcome of section 3 part one is shown below:
+
+```
+all_frame_positives=306, all_frame_true_positives=289, all_frame_false_negatives=17, all_frame_false_positives=15
+precision = 0.9506578947368421, recall = 0.9444444444444444
+```
 
 I got differen results for the z position error mean because I implemented the 
 function 'detect_objects' for the boudning box z cooridnate differently. 
@@ -271,7 +330,7 @@ z = z_bv + configs.lim_z[0]
 
 I had the following result shown below:
 
-<img src="img/perormance_hist_z_mean.png"/>
+<img src="img/histogram_precision_recall_one.jpg"/>
 
 
 When I experimented with the z cooridante as shown below, I had the result shown below for 
@@ -279,9 +338,18 @@ the z position error mean:
 
 z = z_bv
 
-<img src="img/histogram_one.png"/>
+````
+ll_frame_positives=306, all_frame_true_positives=289, all_frame_false_negatives=17, all_frame_false_positives=15
+precision = 0.9506578947368421, recall = 0.9444444444444444
+````
+
+<img src="img/hist_precision_recall_two.jpg"/>
 
 The outcome of the preciosn recall when configs_det.use_labels_as_objects = True is shown below:
 
+````
+all_frame_positives=306, all_frame_true_positives=306, all_frame_false_negatives=0, all_frame_false_positives=0
+precision = 1.0, recall = 1.0
+````
 
-<img src="img/histogram_two.png"/>
+<img src="img/hist_precision_recall_three.jpg"/>

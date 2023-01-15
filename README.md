@@ -195,7 +195,7 @@ The outcome is a visualization of the bounding boxes:
 <img src="img/Frame50_boundingBox.jpg"/>
 
 
-### Summary for Project Step Fouir. it is divided into three section. 
+### Summary for Project Step Four. it is divided into three section. 
 
 
 Task preparations for section one and two:
@@ -289,7 +289,8 @@ all_positives=3, true_positives=3, false_negatives=0, false_positives=0
 
 The outcome for darknet frame 51:
 
-````all_positives=3, true_positives=3, false_negatives=0, false_positives=0
+```
+all_positives=3, true_positives=3, false_negatives=0, false_positives=0
 ````
 
 ## Section Three. Compute precision and recall (ID_S4_EX3)
@@ -339,7 +340,7 @@ the z position error mean:
 z = z_bv
 
 ````
-ll_frame_positives=306, all_frame_true_positives=289, all_frame_false_negatives=17, all_frame_false_positives=15
+all_frame_positives=306, all_frame_true_positives=289, all_frame_false_negatives=17, all_frame_false_positives=15
 precision = 0.9506578947368421, recall = 0.9444444444444444
 ````
 

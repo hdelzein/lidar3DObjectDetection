@@ -89,8 +89,8 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
             ious.append(best_match[0])
             center_devs.append(best_match[1:])
 
-    print(ious)
-    print(center_devs)
+    print('ious={}'.format(ious))
+    print('center_devs={}'.format(center_devs))
 
 
     ####### ID_S4_EX2 START #######     
@@ -111,11 +111,12 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
     
     #######
     ####### ID_S4_EX2 END #######     
-    
+    print('all_positives={}, true_positives={}, false_negatives={}, false_positives={}'.format(all_positives,
+                                                                                                true_positives,
+                                                                                                false_negatives,
+                                                                                                false_positives))
     pos_negs = [all_positives, true_positives, false_negatives, false_positives]
     det_performance = [ious, center_devs, pos_negs]
-
-    print(det_performance)
     
     return det_performance
 
@@ -136,8 +137,14 @@ def compute_performance_stats(det_performance_all: object) -> object:
     #######    
     print('student task ID_S4_EX3')
 
+
     ## step 1 : extract the total number of positives, true positives, false negatives and false positives
     total_pos ,  total_true_pos ,total_false_neg , total_false_pos = map(sum, zip(*pos_negs))
+
+    print('all_frame_positives={}, all_frame_true_positives={}, all_frame_false_negatives={}, all_frame_false_positives={}'.format(total_pos,
+                                                                                               total_true_pos,
+                                                                                               total_false_neg,
+                                                                                               total_false_pos))
     ## step 2 : compute precision
     precision = float(total_true_pos)/float((total_true_pos + total_false_pos))
 
